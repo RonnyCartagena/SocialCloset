@@ -22,12 +22,12 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE) //guarda solo el dia
     @Column(name = "fechaRegistro", nullable = false)
     private Date fechaRegistro;
 
     // Relación ManyToOne hacia Closet (FK)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idCloset", nullable = false)
     private Closet closet;
 
