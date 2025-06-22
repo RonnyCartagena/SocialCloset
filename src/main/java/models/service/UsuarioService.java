@@ -90,7 +90,7 @@ public class UsuarioService {
         }
     }
 
-    private boolean isValidEmail(String email) {
+    public boolean isValidEmail(String email) {
         if (email == null || email.trim().isEmpty()) {
             return false;
         }
