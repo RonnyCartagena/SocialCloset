@@ -118,12 +118,39 @@ public class UsuarioService {
         }
     }
 
+    // ✅ MÉTODO ORIGINAL (mantener para compatibilidad)
     public boolean validarUsuarioPorEmail(String email, String password) {
-        Usuario usuario = usuarioDAO.findByEmail(email);  // Buscar por correo electrónico
+        Usuario usuario = usuarioDAO.findByEmail(email);
         if (usuario != null) {
-            // Suponiendo que la contraseña está en texto claro o has hecho la comparación de contraseñas de manera segura
             return usuario.getPassword().equals(password);
         }
         return false;
+    }
+
+    // ✅ NUEVO MÉTODO: Obtener usuario completo para login
+    public Usuario obtenerUsuarioPorEmail(String email, String password) {
+        try {
+            Usuario usuario = usuarioDAO.findByEmail(email);
+            if (usuario != null && usuario.getPassword().equals(password)) {
+                System.out.println("Login exitoso para usuario: " + usuario.getNombre());
+                return usuario;
+            }
+            System.out.println("Credenciales incorrectas para email: " + email);
+            return null;
+        } catch (Exception e) {
+            System.out.println("Error al validar usuario: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // ✅ MÉTODO ADICIONAL: Obtener usuario por ID (útil para verificar sesiones)
+    public Usuario obtenerUsuarioPorId(Long idUsuario) {
+        try {
+            return usuarioDAO.findById(idUsuario);
+        } catch (Exception e) {
+            System.out.println("Error al obtener usuario por ID: " + e.getMessage());
+            return null;
+        }
     }
 }
