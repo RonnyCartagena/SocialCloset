@@ -3,17 +3,29 @@ run-name: Build Java Maven App
 on: [push]
 jobs:
   build:
-    runs-on: [self-hosted]
+    runs-on: windows-latest  # Usamos un runner de Windows proporcionado por GitHub
+
     steps:
+      # Paso 1: Descargar el repositorio
       - name: Descargar el repositorio
         uses: actions/checkout@v4
+
+      # Paso 2: Configurar Java
       - name: Configurar Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'temurin'  # Establecemos Temurin como distribución de Java
           java-version: '17'
+
+      # Paso 3: Instalar Maven
+      - name: Instalar Maven
+        run: |
+          choco install maven -y  # Usamos Chocolatey, el gestor de paquetes de Windows, para instalar Maven
+          mvn -v  # Verificamos la instalación de Maven
+
+      # Paso 4: Ejecutar ciclo de vida de Maven
       - name: Ejecutar ciclo de vida Maven
-        working-directory: ./
+        working-directory: ./  # Asegúrate de estar en el directorio correcto
         run: |
           mvn clean
           mvn compile
