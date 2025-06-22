@@ -13,6 +13,9 @@ public class Prenda {
     @Column(name = "idprenda")
     private Long idprenda;
 
+    @Column(name = "titulo")
+    private String titulo;
+
     @Column(name = "descripcion")
     private String descripcion;
 
@@ -39,8 +42,9 @@ public class Prenda {
     public Prenda() {
     }
 
-    public Prenda(Closet closet, String color, String descripcion, Date fechapublicacion, String talla, String tipo_categoria, String urlimagen) {
+    public Prenda(Closet closet, String titulo, String color, String descripcion, Date fechapublicacion, String talla, String tipo_categoria, String urlimagen) {
         this.closet = closet;
+        this.titulo = titulo;
         this.color = color;
         this.descripcion = descripcion;
         this.fechapublicacion = fechapublicacion;
@@ -111,5 +115,13 @@ public class Prenda {
 
     public void setUrlimagen(String urlimagen) {
         this.urlimagen = urlimagen;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }
