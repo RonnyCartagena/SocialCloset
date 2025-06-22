@@ -3,7 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+
+    <!-- Configuración para el JSP de Registro -->
     <welcome-file-list>
-        <welcome-file>views/Login.jsp</welcome-file>
+        <welcome-file>views/Login.jsp</welcome-file> <!-- Archivo predeterminado -->
     </welcome-file-list>
 </web-app>

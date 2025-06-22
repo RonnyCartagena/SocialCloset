@@ -1,7 +1,7 @@
 package models.entities;
 
 import jakarta.persistence.*;
-
+import java.time.LocalDate;
 import java.sql.Date;
 
 @Entity
@@ -13,51 +13,84 @@ public class Usuario {
     @Column(name = "idUsuario")
     private Long idUsuario;
 
-    @Column(name = "nombreUsuario", nullable = false, unique = true)
-    private String nombreUsuario;
+    @Column(name = "nombre", nullable = false, unique = true)
+    private String nombre;
 
     @Column(nullable = false, unique = true)
-    private String correo;
+    private String email;
 
     @Column(nullable = false)
     private String password;
 
-    @Temporal(TemporalType.DATE) //guarda solo el dia
+    @Temporal(TemporalType.DATE)
     @Column(name = "fechaRegistro", nullable = false)
     private Date fechaRegistro;
 
-    // Relación ManyToOne hacia Closet (FK)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idCloset", nullable = false)
+    // ✅ CORRECCIÓN: Mapear correctamente la relación OneToOne
+    // Como Closet tiene la FK (idUsuario), Usuario es el lado "mappedBy"
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
     private Closet closet;
 
     // Constructor vacío para JPA
     public Usuario() {
     }
 
-    // Constructor opcional
-    public Usuario(String nombreUsuario, String correo, String password, Date fechaRegistro, Closet closet) {
-        this.nombreUsuario = nombreUsuario;
-        this.correo = correo;
+    // Constructor para registro (sin crear closet automáticamente)
+    public Usuario(String nombre, String password, String email) {
+        this.nombre = nombre;
         this.password = password;
-        this.fechaRegistro = fechaRegistro;
-        this.closet = closet;
+        this.email = email;
+        this.fechaRegistro = Date.valueOf(LocalDate.now());
+        // ❌ NO crear closet aquí - se creará separadamente
     }
 
-    public Closet getCloset() {
-        return closet;
+    // Constructor completo
+    public Usuario(String nombre, String email, String password, Date fechaRegistro) {
+        this.nombre = nombre;
+        this.email = email;
+        this.password = password;
+        this.fechaRegistro = fechaRegistro != null ? fechaRegistro : Date.valueOf(LocalDate.now());
     }
 
-    public void setCloset(Closet closet) {
-        this.closet = closet;
+    // Método para establecer la fecha de registro automáticamente antes de persistir
+    @PrePersist
+    protected void onCreate() {
+        if (fechaRegistro == null) {
+            fechaRegistro = Date.valueOf(LocalDate.now());
+        }
     }
 
-    public String getCorreo() {
-        return correo;
+    // Getters y Setters
+    public Long getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Date getFechaRegistro() {
@@ -68,27 +101,11 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
+    public Closet getCloset() {
+        return closet;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCloset(Closet closet) {
+        this.closet = closet;
     }
 }

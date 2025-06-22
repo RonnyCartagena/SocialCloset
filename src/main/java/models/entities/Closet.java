@@ -5,32 +5,35 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="Closet")
 public class Closet {
-    @Id //indica el campo de clave primaria
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCloset")
     private Long idCloset;
 
     @Column(name = "publicado", nullable = false)
-    private boolean publicado;
+    private boolean publicado = true; // Valor por defecto
 
+    // ✅ CORRECCIÓN: Mapear correctamente la FK
     @OneToOne
-    @JoinColumn(name="idUsuario", nullable = false)
+    @JoinColumn(name="idUsuario", nullable = false, unique = true)
     private Usuario usuario;
 
-    //Constructor vacio obligatorio para JPA
+    // Constructor vacío obligatorio para JPA
     public Closet() {
     }
 
-    // Constructor opcional para facilitar creación
+    public Closet(Usuario usuario) {
+        this.usuario = usuario;
+        this.publicado = true; // Valor por defecto
+    }
 
+    // Constructor opcional para facilitar creación
     public Closet(boolean publicado, Usuario usuario) {
         this.publicado = publicado;
         this.usuario = usuario;
     }
 
-
-    //getters y setters de los atributos (excepto la PK)
-
+    // Getters y setters
     public Long getIdCloset() {
         return idCloset;
     }
