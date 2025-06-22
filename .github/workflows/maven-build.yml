@@ -1,0 +1,21 @@
+name: Maven Build
+run-name: Build Java Maven App
+on: [push]
+jobs:
+  build:
+    runs-on: [self-hosted]
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Ejecutar ciclo de vida Maven
+        working-directory: ./
+        run: |
+          mvn clean
+          mvn compile
+          mvn test
+          mvn package
