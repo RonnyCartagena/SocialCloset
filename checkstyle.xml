@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <module name="TreeWalker">
+        <!-- Nombre de clase en UpperCamelCase -->
+        <module name="TypeName">
+            <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+        </module>
+        <!-- Llaves en la misma linea de definicion -->
+        <module name="LeftCurly">
+            <property name="option" value="eol"/>
+        </module>
+        <!-- Importes ordenados segun Google -->
+        <module name="ImportOrder">
+            <!-- coloca primero los static imports -->
+            <property name="option" value="ABOVE"/>
+            <!-- grupos de paquetes en este orden -->
+            <property name="groups" value="java,javax,org,sun,com"/>
+        </module>
+
+        <!-- Mas reglas segun tus necesidades -->
+    </module>
+</module>
