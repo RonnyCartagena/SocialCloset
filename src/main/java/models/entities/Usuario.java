@@ -41,7 +41,7 @@ public class Usuario {
         this.password = password;
         this.email = email;
         this.fechaRegistro = Date.valueOf(LocalDate.now());
-        // ❌ NO crear closet aquí - se creará separadamente
+        // NO crear closet aqui - se creara separadamente
     }
 
     // Constructor completo
@@ -52,7 +52,7 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro != null ? fechaRegistro : Date.valueOf(LocalDate.now());
     }
 
-    // Método para establecer la fecha de registro automáticamente antes de persistir
+    // Metodo para establecer la fecha de registro automáticamente antes de persistir
     @PrePersist
     protected void onCreate() {
         if (fechaRegistro == null) {
